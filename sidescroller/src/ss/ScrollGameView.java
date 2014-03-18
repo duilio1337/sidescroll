@@ -1,6 +1,11 @@
 package ss;
 
+import mechanics.PlatformControlScheme;
+import mechanics.PlatformController;
+import platforms.Base;
 import jgame.GContainer;
+import jgame.GSprite;
+import jgame.ImageCache;
 
 public class ScrollGameView extends GContainer {
 	
@@ -13,8 +18,14 @@ public class ScrollGameView extends GContainer {
 	}
 	
 	public void initScrollGameView() {
+		GSprite bk = new GSprite(ImageCache.getImage("background.png"));
+		bk.setAnchorTopLeft();
+		addAt(bk, 0, 0);
 		
+		PlatformController bgc = new PlatformController(PlatformControlScheme.WASD, 10, 0, 0);
+		bk.addController(bgc);
 		
+		addAt(new Base(), 1280/2, 700);
 	}
 
 }
