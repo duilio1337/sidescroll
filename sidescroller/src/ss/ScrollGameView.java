@@ -1,5 +1,6 @@
 package ss;
 
+import hero.Hero;
 import mechanics.PlatformControlScheme;
 import mechanics.PlatformController;
 import platforms.Base;
@@ -26,6 +27,10 @@ public class ScrollGameView extends GContainer {
 		bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);
+		
+		Hero hero = new Hero();
+		addAt(hero, 1280/2, 720/2);
+		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, );
 	}
 
 }
