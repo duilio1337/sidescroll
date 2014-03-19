@@ -30,7 +30,8 @@ public class ScrollGameView extends GContainer {
 		
 		Hero hero = new Hero();
 		addAt(hero, 1280/2, 720/2);
-		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, );
+		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, 0, -40, 2 );
+		hero.addController(hc);
 	}
 
 }
