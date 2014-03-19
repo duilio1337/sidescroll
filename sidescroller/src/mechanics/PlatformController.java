@@ -153,8 +153,12 @@ public class PlatformController implements Controller {
 			// vy = Math.min(vy, target.getHeight());
 			// vy += gravity;
 		}
-		vx = horizontal * maxSpeed;
-
+		
+		if(onSolidGround){
+			vx = horizontal * maxSpeed;
+		}
+		
+		
 		target.setLocation(target.getX() + vx, target.getY() + vy);
 	}
 
