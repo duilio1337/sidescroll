@@ -5,13 +5,14 @@ import mechanics.PlatformControlScheme;
 import mechanics.PlatformController;
 import platforms.Base;
 import platforms.Block;
+import platforms.Block2080;
 import jgame.GContainer;
 import jgame.GSprite;
 import jgame.ImageCache;
 
 public class ScrollGameView extends GContainer {
 	
-	Block block = new Block();
+	Block2080 block2080 = new Block2080();
 	
 	public ScrollGameView() {
 		setSize(1280, 720);
@@ -34,6 +35,7 @@ public class ScrollGameView extends GContainer {
 		addAt(new Base(), 1280/2, 700);
 		
 		Hero hero = new Hero();
+		hero.setAnchorCenter();
 		addAt(hero, 1280/2, 720/2);
 		
 		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, 0, -40, 2 );
@@ -43,7 +45,11 @@ public class ScrollGameView extends GContainer {
 	}
 	
 	public void createPlatforms() {
-		addAtCenter(block);
+		PlatformController pc = new PlatformController(PlatformControlScheme.WASD, 10, 0, 0);
+		
+		addAt(block2080, 1280/2, 720/1.5);
+		block2080.setAnchorCenter();
+		block2080.addController(pc);
 	}
 
 }

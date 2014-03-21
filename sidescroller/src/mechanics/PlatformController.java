@@ -50,6 +50,11 @@ public class PlatformController implements Controller {
 	 * The gravitational acceleration, in px/frame<sup>2</sup>.
 	 */
 	private double gravity;
+	
+	/**
+	 * used to test if char in on solid ground
+	 */
+	private boolean onSolidGround;
 
 	/**
 	 * Creates the controller with the given parameters. The default
@@ -115,7 +120,7 @@ public class PlatformController implements Controller {
 			}
 		}
 
-		boolean onSolidGround = false;
+		onSolidGround = false;
 
 		List<SolidGround> solidGrounds = context
 				.getInstancesOfClass(SolidGround.class);
@@ -124,12 +129,35 @@ public class PlatformController implements Controller {
 
 			GObject groundObject = (GObject) solidGround;
 			if (target.hitTest(groundObject)) {
-				onSolidGround = true;
+				if (target.getY() > groundObject.getY()) {
+					if (vy < 0) {
+						vy = 0;
+					}
+					onSolidGround = false;
+				} else {
+					onSolidGround = true;
+				}
+
+				//WIP: TRYING TO MAKE YOU NOT ABLE TO WALK THROUGH PLATFORMS, MAY NEED TO COPY CONTROLLER FOR HERO
+//				if ((target.getY() - (target.getHeight() / 2)) <= (groundObject
+//						.getY() + (groundObject.getHeight() / 2))
+//						&& (target.getY() + (target.getHeight() / 2)) >= (groundObject
+//								.getY() - (groundObject.getHeight() / 2))) {
+//
+//					if ((target.getX() - (target.getWidth() / 2)) <= (groundObject
+//							.getX() + (groundObject.getWidth() / 2))
+//							&& (target.getX() + (target.getWidth() / 2)) >= (groundObject
+//									.getX() - (groundObject.getWidth() / 2))) {
+//						horizontal = 0;
+//						vx = 0;
+//						System.out.println("STOPET");
+//					}
+//					System.out.println("BLOOP");
+//				} 
 				break;
 			}
 
 		}
-
 
 		if (onSolidGround) {
 			if (jump) {
@@ -153,12 +181,11 @@ public class PlatformController implements Controller {
 			// vy = Math.min(vy, target.getHeight());
 			// vy += gravity;
 		}
-		
-		if(onSolidGround){
+
+		if (onSolidGround) {
 			vx = horizontal * maxSpeed;
 		}
-		
-		
+
 		target.setLocation(target.getX() + vx, target.getY() + vy);
 	}
 
@@ -179,7 +206,11 @@ public class PlatformController implements Controller {
 	public double getMaxSpeed() {
 		return maxSpeed;
 	}
-
+	
+	public boolean getOnSolidGround() {
+		return onSolidGround;
+	}
+	
 	/**
 	 * Sets the new maximum jump.
 	 * 
