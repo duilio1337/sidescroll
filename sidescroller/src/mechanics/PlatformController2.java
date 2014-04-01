@@ -173,10 +173,13 @@ public class PlatformController2 implements Controller {
 		}
 
 		if (onSolidGround) {
+			//acceleration
 			if(vx < maxSpeed && horizontal > 0) {
 				vx += horizontal * gAcceleration;
 			} else if(vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * gAcceleration;
+				
+			//"deacceleration"
 			} else if(horizontal == 0 && vx > 0) {
 				vx -= gAcceleration;
 			} else if(horizontal == 0 && vx < 0) {
