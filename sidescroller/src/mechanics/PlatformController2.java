@@ -16,7 +16,7 @@ import jgame.controller.Controller;
  * @author William Chargin
  * 
  */
-public class PlatformController implements Controller {
+public class PlatformController2 implements Controller {
 	/**
 	 * The default gravitational acceleration, in px/frame<sup>2</sup>.
 	 */
@@ -60,7 +60,6 @@ public class PlatformController implements Controller {
 	 * The amount of change in vx / frame
 	 */
 	private double gAcceleration;
-	
 
 	/**
 	 * Creates the controller with the given parameters. The default
@@ -73,8 +72,8 @@ public class PlatformController implements Controller {
 	 * @param maxJump
 	 *            the maximum jump speed (in px/frame)
 	 */
-	public PlatformController(PlatformControlScheme controlScheme,
-			double maxSpeed, double maxJump, double acceleration) {
+	public PlatformController2(PlatformControlScheme controlScheme,
+			double maxSpeed, double acceleration, double maxJump) {
 		this(controlScheme, maxSpeed, maxJump, acceleration, DEFAULT_GRAVITY); // ++++++++++++++
 																	// ??????????????????????????????
 	}
@@ -91,7 +90,7 @@ public class PlatformController implements Controller {
 	 * @param gravity
 	 *            the gravitation acceleration (in px/frame<sup>2</sup>)
 	 */
-	public PlatformController(PlatformControlScheme controlScheme,
+	public PlatformController2(PlatformControlScheme controlScheme,
 			double maxSpeed, double maxJump, double acceleration, double gravity) {
 		super();
 		this.controlScheme = controlScheme;
@@ -119,9 +118,9 @@ public class PlatformController implements Controller {
 
 		for (int key : keys) {
 			if (key == controlScheme.lt) {
-				horizontal -= 1;
-			} else if (key == controlScheme.rt) {
 				horizontal += 1;
+			} else if (key == controlScheme.rt) {
+				horizontal -= 1;
 			} else if (key == controlScheme.jump) {
 				jump = true;
 			}
@@ -144,20 +143,7 @@ public class PlatformController implements Controller {
 				} else {
 					onSolidGround = true;
 				}
-
-				//WIP: TRYING TO MAKE YOU NOT ABLE TO WALK THROUGH PLATFORMS, MAY NEED TO COPY CONTROLLER FOR HERO
-				if ((target.getY() - (target.getHeight() / 2)) <= (groundObject
-						.getY() + (groundObject.getHeight() / 2))
-						&& (target.getY() + (target.getHeight() / 2)) >= (groundObject
-								.getY() - (groundObject.getHeight() / 2))) {
-
-					if ((target.getX() - (target.getWidth() / 2)) <= (groundObject
-							.getX() + (groundObject.getWidth() / 2))
-							&& (target.getX() + (target.getWidth() / 2)) >= (groundObject
-									.getX() - (groundObject.getWidth() / 2))) {
-						//horizontal = 0;
-					}
-				} 
+ 
 				break;
 			}
 
@@ -173,7 +159,7 @@ public class PlatformController implements Controller {
 				vy = 0;
 			}
 		} else {
-			vy += gravity ;
+			vy += gravity;
 			if (vy > target.getHeight()) {
 				vy = target.getHeight();
 			}
@@ -197,8 +183,7 @@ public class PlatformController implements Controller {
 				vx += gAcceleration;
 			}
 		}
-		System.out.println(vx);
-		
+
 		target.setLocation(target.getX() + vx, target.getY() + vy);
 	}
 

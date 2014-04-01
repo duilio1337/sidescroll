@@ -3,8 +3,8 @@ package ss;
 import hero.Hero;
 import mechanics.PlatformControlScheme;
 import mechanics.PlatformController;
+import mechanics.PlatformController2;
 import platforms.Base;
-import platforms.Block;
 import platforms.Block2080;
 import jgame.GContainer;
 import jgame.GSprite;
@@ -29,7 +29,7 @@ public class ScrollGameView extends GContainer {
 		bk.setAnchorTopLeft();
 		addAt(bk, 0, 0);
 		
-		PlatformController bgc = new PlatformController(PlatformControlScheme.WASD, 10, 0, 0);
+		PlatformController2 bgc = new PlatformController2(PlatformControlScheme.WASD, 10, 0, 1.5, 0);
 		bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);
@@ -38,14 +38,14 @@ public class ScrollGameView extends GContainer {
 		hero.setAnchorCenter();
 		addAt(hero, 1280/2, 720/2);
 		
-		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, 0, -40, 2 );
+		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, 0, -40, 0, 2);
 		hero.addController(hc);
 		
 		createPlatforms();
 	}
 	
 	public void createPlatforms() {
-		PlatformController pc = new PlatformController(PlatformControlScheme.WASD, 10, 0, 0);
+		PlatformController2 pc = new PlatformController2(PlatformControlScheme.WASD, 10, 0, 1.5, 0);
 		
 		addAt(block2080, 1280/2, 720/1.5);
 		block2080.setAnchorCenter();
