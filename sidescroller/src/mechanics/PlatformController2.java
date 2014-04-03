@@ -185,6 +185,8 @@ public class PlatformController2 implements Controller {
 			} else if(horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
 			}
+			
+			//vx = horizontal * maxSpeed;
 		}
 
 		target.setLocation(target.getX() + vx, target.getY() + vy);

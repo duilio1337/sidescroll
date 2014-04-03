@@ -34,7 +34,7 @@ public class PlatformController implements Controller {
 	/**
 	 * These two variables describe the current velocity of the player.
 	 */
-	private double vx, vy;
+	private double vx, vy, vyFIX;
 
 	/**
 	 * The maximum horizontal movement speed.
@@ -95,7 +95,7 @@ public class PlatformController implements Controller {
 			double maxSpeed, double maxJump, double acceleration, double gravity) {
 		super();
 		this.controlScheme = controlScheme;
-		vx = vy = 0;
+		vx = vy = vyFIX = 0;
 		this.maxSpeed = maxSpeed;
 		this.maxJump = maxJump;
 		this.gravity = gravity;
@@ -126,7 +126,7 @@ public class PlatformController implements Controller {
 				jump = true;
 			}
 		}
-
+		vyFIX = 0;
 		onSolidGround = false;
 
 		List<SolidGround> solidGrounds = context
@@ -146,16 +146,21 @@ public class PlatformController implements Controller {
 				}
 
 				//WIP: TRYING TO MAKE YOU NOT ABLE TO WALK THROUGH PLATFORMS, MAY NEED TO COPY CONTROLLER FOR HERO
-				if ((target.getY() - (target.getHeight() / 2)) <= (groundObject
-						.getY() + (groundObject.getHeight() / 2))
-						&& (target.getY() + (target.getHeight() / 2)) >= (groundObject
-								.getY() - (groundObject.getHeight() / 2))) {
+				if ((target.getY() - (target.getHeight() / 2)) < (groundObject
+						.getY() + (groundObject.getHeight() / 2) - 50)
+						&& (target.getY() + (target.getHeight() / 2)) > (groundObject
+								.getY() - (groundObject.getHeight() / 2)) + 5) {
 
-					if ((target.getX() - (target.getWidth() / 2)) <= (groundObject
+					if ((target.getX() - (target.getWidth() / 2)) < (groundObject
 							.getX() + (groundObject.getWidth() / 2))
-							&& (target.getX() + (target.getWidth() / 2)) >= (groundObject
+							&& (target.getX() + (target.getWidth() / 2)) > (groundObject
 									.getX() - (groundObject.getWidth() / 2))) {
-						//horizontal = 0;
+						horizontal = 0;
+						vyFIX = -(target.getY() + (target.getHeight() / 2)) + (groundObject
+								.getY() - (groundObject.getHeight() / 2));
+						
+						System.out.println("adgkliasdgli");
+						
 					}
 				} 
 				break;
@@ -198,7 +203,7 @@ public class PlatformController implements Controller {
 			}
 		}
 		
-		target.setLocation(target.getX() + vx, target.getY() + vy);
+		target.setLocation(target.getX() + vx, target.getY() + vy +vyFIX);
 	}
 
 	/**
