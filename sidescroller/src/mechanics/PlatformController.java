@@ -197,7 +197,6 @@ public class PlatformController implements Controller {
 				vx += gAcceleration;
 			}
 		}
-		System.out.println(vx);
 		
 		target.setLocation(target.getX() + vx, target.getY() + vy);
 	}
