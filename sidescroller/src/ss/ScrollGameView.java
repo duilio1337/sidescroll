@@ -38,18 +38,14 @@ public class ScrollGameView extends GContainer {
 		hero.setAnchorCenter();
 		addAt(hero, 1280/2, 720/2);
 		
-		PlatformController hc = new PlatformController(PlatformControlScheme.WASD, 10, -40, 1.5, 2);
-		hero.addController(hc);
 		
 		createPlatforms();
 	}
 	
 	public void createPlatforms() {
-		PlatformController2 pc = new PlatformController2(PlatformControlScheme.WASD, 10, 0, 1.5, 0);
-		
-		addAt(block2080, 1280/2, 630);
 		block2080.setAnchorCenter();
-		//block2080.addController(pc);
+		addAt(block2080, 1280/2, 640);
+		
 	}
 
 }

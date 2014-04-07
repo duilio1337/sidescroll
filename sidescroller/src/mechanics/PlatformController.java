@@ -34,7 +34,7 @@ public class PlatformController implements Controller {
 	/**
 	 * These two variables describe the current velocity of the player.
 	 */
-	private double vx, vy, vyFIX;
+	private double vx, vy, outOfGround;
 
 	/**
 	 * The maximum horizontal movement speed.
@@ -50,17 +50,30 @@ public class PlatformController implements Controller {
 	 * The gravitational acceleration, in px/frame<sup>2</sup>.
 	 */
 	private double gravity;
-	
+
 	/**
 	 * used to test if char in on solid ground
 	 */
 	private boolean onSolidGround;
-	
+
+	/**
+	 * bool used to see if char is hitting a wall
+	 */
+	private boolean onSolidWall;
+
 	/**
 	 * The amount of change in vx / frame
 	 */
 	private double gAcceleration;
-	
+
+	private double targetX;
+	private double targetY;
+	private double targetHeight;
+	private double targetWidth;
+	private double groundObjectX;
+	private double groundObjectY;
+	private double groundObjectHeight;
+	private double groundObjectWidth;
 
 	/**
 	 * Creates the controller with the given parameters. The default
@@ -76,7 +89,7 @@ public class PlatformController implements Controller {
 	public PlatformController(PlatformControlScheme controlScheme,
 			double maxSpeed, double maxJump, double acceleration) {
 		this(controlScheme, maxSpeed, maxJump, acceleration, DEFAULT_GRAVITY); // ++++++++++++++
-																	// ??????????????????????????????
+		// ??????????????????????????????
 	}
 
 	/**
@@ -95,7 +108,7 @@ public class PlatformController implements Controller {
 			double maxSpeed, double maxJump, double acceleration, double gravity) {
 		super();
 		this.controlScheme = controlScheme;
-		vx = vy = vyFIX = 0;
+		vx = vy = outOfGround = 0;
 		this.maxSpeed = maxSpeed;
 		this.maxJump = maxJump;
 		this.gravity = gravity;
@@ -126,8 +139,9 @@ public class PlatformController implements Controller {
 				jump = true;
 			}
 		}
-		vyFIX = 0;
+		outOfGround = 0;
 		onSolidGround = false;
+		onSolidWall = false;
 
 		List<SolidGround> solidGrounds = context
 				.getInstancesOfClass(SolidGround.class);
@@ -145,25 +159,36 @@ public class PlatformController implements Controller {
 					onSolidGround = true;
 				}
 
-				//WIP: TRYING TO MAKE YOU NOT ABLE TO WALK THROUGH PLATFORMS, MAY NEED TO COPY CONTROLLER FOR HERO
-				if ((target.getY() - (target.getHeight() / 2)) < (groundObject
-						.getY() + (groundObject.getHeight() / 2) - 50)
-						&& (target.getY() + (target.getHeight() / 2)) > (groundObject
-								.getY() - (groundObject.getHeight() / 2)) + 5) {
+				// increase efficiency?
+				targetX = target.getX();
+				targetY = target.getY();
+				targetHeight = target.getHeight();
+				targetWidth = target.getWidth();
+				groundObjectX = groundObject.getX();
+				groundObjectY = groundObject.getY();
+				groundObjectHeight = groundObject.getHeight();
+				groundObjectWidth = groundObject.getWidth();
 
-					if ((target.getX() - (target.getWidth() / 2)) < (groundObject
-							.getX() + (groundObject.getWidth() / 2))
-							&& (target.getX() + (target.getWidth() / 2)) > (groundObject
-									.getX() - (groundObject.getWidth() / 2))) {
+				// WIP: TRYING TO MAKE YOU NOT ABLE TO WALK THROUGH PLATFORMS,
+				// will NEED TO COPY CONTROLLER FOR HERO
+				if ((targetY - (targetHeight / 2)) < (groundObjectY + (groundObjectHeight / 2) - 50)
+						&& (targetY + (targetHeight / 2)) > (groundObjectY - (groundObjectHeight / 2)) + 5) {
+
+					if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2) - 40)
+							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2) + 40)) {
+
 						horizontal = 0;
-						vyFIX = -(target.getY() + (target.getHeight() / 2)) + (groundObject
-								.getY() - (groundObject.getHeight() / 2));
-						
-						System.out.println("adgkliasdgli");
-						
+						outOfGround = -(targetY + (targetHeight / 2))
+								+ (groundObjectY - (groundObjectHeight / 2));
+
+					} else if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2))
+							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2))) {
+						horizontal = 0;
+						vx = 0;
+						onSolidWall = true;
 					}
-				} 
-				break;
+				}
+				
 			}
 
 		}
@@ -178,7 +203,7 @@ public class PlatformController implements Controller {
 				vy = 0;
 			}
 		} else {
-			vy += gravity ;
+			vy += gravity;
 			if (vy > target.getHeight()) {
 				vy = target.getHeight();
 			}
@@ -190,20 +215,19 @@ public class PlatformController implements Controller {
 			// vy = Math.min(vy, target.getHeight());
 			// vy += gravity;
 		}
-
 		if (onSolidGround) {
-			if(vx < maxSpeed && horizontal > 0) {
+			if (vx < maxSpeed && horizontal > 0) {
 				vx += horizontal * gAcceleration;
-			} else if(vx > -maxSpeed && horizontal < 0) {
+			} else if (vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * gAcceleration;
-			} else if(horizontal == 0 && vx > 0) {
+			} else if (horizontal == 0 && vx > 0) {
 				vx -= gAcceleration;
-			} else if(horizontal == 0 && vx < 0) {
+			} else if (horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
 			}
 		}
-		
-		target.setLocation(target.getX() + vx, target.getY() + vy +vyFIX);
+
+		target.setLocation(target.getX() + vx, target.getY() + vy + outOfGround);
 	}
 
 	/**
@@ -223,11 +247,11 @@ public class PlatformController implements Controller {
 	public double getMaxSpeed() {
 		return maxSpeed;
 	}
-	
+
 	public boolean isOnSolidGround() {
 		return onSolidGround;
 	}
-	
+
 	/**
 	 * Sets the new maximum jump.
 	 * 
