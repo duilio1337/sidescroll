@@ -65,6 +65,8 @@ public class PlatformController implements Controller {
 	 * The amount of change in vx / frame
 	 */
 	private double gAcceleration;
+	
+	private double aAcceleration;
 
 	private double targetX;
 	private double targetY;
@@ -113,6 +115,7 @@ public class PlatformController implements Controller {
 		this.maxJump = maxJump;
 		this.gravity = gravity;
 		this.gAcceleration = acceleration;
+		this.aAcceleration = 0.1;
 	}
 
 	@Override
@@ -177,13 +180,12 @@ public class PlatformController implements Controller {
 					if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2) - 40)
 							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2) + 40)) {
 
-						horizontal = 0;
 						outOfGround = -(targetY + (targetHeight / 2))
 								+ (groundObjectY - (groundObjectHeight / 2));
 
 					} else if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2))
 							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2))) {
-						horizontal = 0;
+						
 						vx = 0;
 						onSolidWall = true;
 					}
@@ -215,15 +217,26 @@ public class PlatformController implements Controller {
 			// vy = Math.min(vy, target.getHeight());
 			// vy += gravity;
 		}
+		
 		if (onSolidGround) {
-			if (vx < maxSpeed && horizontal > 0) {
+			if (!onSolidWall && vx < maxSpeed && horizontal > 0) {
 				vx += horizontal * gAcceleration;
-			} else if (vx > -maxSpeed && horizontal < 0) {
+			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * gAcceleration;
-			} else if (horizontal == 0 && vx > 0) {
+			} else if (!onSolidWall && horizontal == 0 && vx > 0) {
 				vx -= gAcceleration;
-			} else if (horizontal == 0 && vx < 0) {
+			} else if (!onSolidWall && horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
+			} else if (onSolidWall && targetX > groundObjectX && horizontal > 0) {
+				vx += horizontal * gAcceleration;
+			} else if (onSolidWall && targetX < groundObjectX && horizontal < 0) {
+				vx += horizontal * gAcceleration;
+			}
+		} else {
+			if (!onSolidWall && vx < maxSpeed && horizontal > 0) {
+				vx += horizontal * aAcceleration;
+			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
+				vx += horizontal * aAcceleration;
 			}
 		}
 
