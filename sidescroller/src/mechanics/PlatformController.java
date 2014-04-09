@@ -223,6 +223,8 @@ public class PlatformController implements Controller {
 				vx += horizontal * gAcceleration;
 			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * gAcceleration;
+			} else if (!onSolidWall && horizontal == 0 && vx > -1 && vx < 1) {
+				vx = 0;
 			} else if (!onSolidWall && horizontal == 0 && vx > 0) {
 				vx -= gAcceleration;
 			} else if (!onSolidWall && horizontal == 0 && vx < 0) {
@@ -239,7 +241,7 @@ public class PlatformController implements Controller {
 				vx += horizontal * aAcceleration;
 			}
 		}
-
+		System.out.println(vx);
 		target.setLocation(target.getX() + vx, target.getY() + vy + outOfGround);
 	}
 
