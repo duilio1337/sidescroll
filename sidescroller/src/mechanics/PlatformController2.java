@@ -56,6 +56,8 @@ public class PlatformController2 implements Controller {
 	 */
 	private boolean onSolidGround;
 	
+	private boolean onSolidWall;
+	
 	/**
 	 * The amount of change in vx / frame
 	 */
@@ -173,20 +175,27 @@ public class PlatformController2 implements Controller {
 		}
 
 		if (onSolidGround) {
-			//acceleration
-			if(vx < maxSpeed && horizontal > 0) {
+			if (!onSolidWall && vx < maxSpeed && horizontal > 0) {
 				vx += horizontal * gAcceleration;
-			} else if(vx > -maxSpeed && horizontal < 0) {
+			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * gAcceleration;
-				
-			//"deacceleration"
-			} else if(horizontal == 0 && vx > 0) {
+			} else if (!onSolidWall && horizontal == 0 && vx > -1 && vx < 1) {
+				vx = 0;
+			} else if (!onSolidWall && horizontal == 0 && vx > 0) {
 				vx -= gAcceleration;
-			} else if(horizontal == 0 && vx < 0) {
+			} else if (!onSolidWall && horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
+			} else if (onSolidWall && targetX > groundObjectX && horizontal > 0) {
+				vx += horizontal * gAcceleration;
+			} else if (onSolidWall && targetX < groundObjectX && horizontal < 0) {
+				vx += horizontal * gAcceleration;
 			}
-			
-			//vx = horizontal * maxSpeed;
+		} else {
+			if (!onSolidWall && vx < maxSpeed && horizontal > 0) {
+				vx += horizontal * aAcceleration;
+			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
+				vx += horizontal * aAcceleration;
+			}
 		}
 
 		target.setLocation(target.getX() + vx, target.getY() + vy);

@@ -177,8 +177,8 @@ public class PlatformController implements Controller {
 				if ((targetY - (targetHeight / 2)) < (groundObjectY + (groundObjectHeight / 2) - 50)
 						&& (targetY + (targetHeight / 2)) > (groundObjectY - (groundObjectHeight / 2)) + 5) {
 
-					if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2) - 40)
-							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2) + 40)) {
+					if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2) - 20)
+							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2) + 20)) {
 
 						outOfGround = -(targetY + (targetHeight / 2))
 								+ (groundObjectY - (groundObjectHeight / 2));
@@ -265,6 +265,10 @@ public class PlatformController implements Controller {
 
 	public boolean isOnSolidGround() {
 		return onSolidGround;
+	}
+	
+	public boolean isOnSolidWall() {
+		return onSolidWall;
 	}
 
 	/**

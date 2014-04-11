@@ -11,7 +11,7 @@ public class Block2080 extends GSprite implements SolidGround {
 		super(ImageCache.getImage("block2080.png"));
 		
 		PlatformController2 pc = new PlatformController2(PlatformControlScheme.WASD, 10, 0, 1.5, 0);
-		//addController(pc);
+		addController(pc);
 	}
 
 }
