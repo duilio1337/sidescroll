@@ -29,7 +29,7 @@ public class ScrollGameView extends GContainer {
 		bk.setAnchorTopLeft();
 		addAt(bk, 0, 0);
 		
-		PlatformController2 bgc = new PlatformController2(PlatformControlScheme.WASD, 10, 0, 1.5, 0);
+		PlatformController2 bgc = new PlatformController2();
 		//bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);

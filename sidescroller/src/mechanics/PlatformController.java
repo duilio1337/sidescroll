@@ -262,6 +262,14 @@ public class PlatformController implements Controller {
 	public double getMaxSpeed() {
 		return maxSpeed;
 	}
+	
+	public double getvx() {
+		return vx;
+	}
+	
+	public double getvy() {
+		return vy;
+	}
 
 	public boolean isOnSolidGround() {
 		return onSolidGround;
