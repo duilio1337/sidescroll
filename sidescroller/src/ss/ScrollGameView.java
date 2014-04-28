@@ -25,7 +25,7 @@ public class ScrollGameView extends GContainer {
 	public void initScrollGameView() {
 		removeAllChildren();
 		
-		GSprite bk = new GSprite(ImageCache.getImage("background.png"));
+		GSprite bk = new GSprite(ImageCache.getImage("background2.png"));
 		bk.setAnchorTopLeft();
 		addAt(bk, 0, 0);
 		
@@ -44,8 +44,8 @@ public class ScrollGameView extends GContainer {
 	
 	public void createPlatforms() {
 		block2080.setAnchorCenter();
-		addAt(block2080, 1280/2, 640);
-		
+		addAt(new Block2080(), 1280/2, 640);
+		addAt(new Block2080(), 1280/2, 400);
 	}
 
 }

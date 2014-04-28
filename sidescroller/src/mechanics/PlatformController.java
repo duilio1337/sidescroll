@@ -34,7 +34,9 @@ public class PlatformController implements Controller {
 	/**
 	 * These two variables describe the current velocity of the player.
 	 */
-	private double vx, vy, outOfGround;
+	private static double vx;
+	private static double vy;
+	private double outOfGround;
 
 	/**
 	 * The maximum horizontal movement speed.
@@ -206,9 +208,7 @@ public class PlatformController implements Controller {
 			}
 		} else {
 			vy += gravity;
-			if (vy > target.getHeight()) {
-				vy = target.getHeight();
-			}
+			
 
 			/*
 			 * if (vy + gravity < target.getHeight()) { vy += gravity; }
@@ -229,9 +229,9 @@ public class PlatformController implements Controller {
 				vx -= gAcceleration;
 			} else if (!onSolidWall && horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
-			} else if (onSolidWall && targetX > groundObjectX && horizontal > 0) {
+			} else if (onSolidWall && targetX < groundObjectX && horizontal > 0) {
 				vx += horizontal * gAcceleration;
-			} else if (onSolidWall && targetX < groundObjectX && horizontal < 0) {
+			} else if (onSolidWall && targetX > groundObjectX && horizontal < 0) {
 				vx += horizontal * gAcceleration;
 			}
 		} else {
@@ -242,7 +242,7 @@ public class PlatformController implements Controller {
 			}
 		}
 		System.out.println(vx);
-		target.setLocation(target.getX() + vx, target.getY() + vy + outOfGround);
+		target.setLocation(target.getX() , target.getY() + vy + outOfGround);
 	}
 
 	/**
@@ -263,11 +263,11 @@ public class PlatformController implements Controller {
 		return maxSpeed;
 	}
 	
-	public double getvx() {
+	public static double getvx() {
 		return vx;
 	}
 	
-	public double getvy() {
+	public static double getvy() {
 		return vy;
 	}
 

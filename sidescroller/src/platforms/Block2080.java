@@ -1,10 +1,9 @@
 package platforms;
 
 import mechanics.PlatformController2;
-import jgame.GSprite;
 import jgame.ImageCache;
 
-public class Block2080 extends GSprite implements SolidGround {
+public class Block2080 extends Platform {
 	
 	public Block2080() {
 		super(ImageCache.getImage("block2080.png"));
