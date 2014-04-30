@@ -16,7 +16,7 @@ public class PlatformController2 implements Controller {
 	/**
 	 * These two variables describe the current velocity of the player.
 	 */
-	private double vx, vy;
+	private double vx;
 	private GObject object;
 
 	public PlatformController2() {

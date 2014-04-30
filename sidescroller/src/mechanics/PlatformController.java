@@ -137,9 +137,9 @@ public class PlatformController implements Controller {
 
 		for (int key : keys) {
 			if (key == controlScheme.lt) {
-				horizontal -= 1;
-			} else if (key == controlScheme.rt) {
 				horizontal += 1;
+			} else if (key == controlScheme.rt) {
+				horizontal -= 1;
 			} else if (key == controlScheme.jump) {
 				jump = true;
 			}
@@ -238,6 +238,10 @@ public class PlatformController implements Controller {
 			if (!onSolidWall && vx < maxSpeed && horizontal > 0) {
 				vx += horizontal * aAcceleration;
 			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
+				vx += horizontal * aAcceleration;
+			} else if (!onSolidWall && vx > 0 && horizontal == 0) {
+				vx -= horizontal * aAcceleration;
+			} else if (!onSolidWall && vx < 0 && horizontal == 0) {
 				vx += horizontal * aAcceleration;
 			}
 		}

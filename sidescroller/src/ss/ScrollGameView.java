@@ -1,8 +1,6 @@
 package ss;
 
 import hero.Hero;
-import mechanics.PlatformControlScheme;
-import mechanics.PlatformController;
 import mechanics.PlatformController2;
 import platforms.Base;
 import platforms.Block2080;
@@ -27,10 +25,10 @@ public class ScrollGameView extends GContainer {
 		
 		GSprite bk = new GSprite(ImageCache.getImage("background2.png"));
 		bk.setAnchorTopLeft();
-		addAt(bk, 0, 0);
+		addAtCenter(bk);
 		
 		PlatformController2 bgc = new PlatformController2();
-		//bk.addController(bgc);
+		bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);
 		
@@ -43,7 +41,6 @@ public class ScrollGameView extends GContainer {
 	}
 	
 	public void createPlatforms() {
-		block2080.setAnchorCenter();
 		addAt(new Block2080(), 1280/2, 640);
 		addAt(new Block2080(), 1280/2, 400);
 	}

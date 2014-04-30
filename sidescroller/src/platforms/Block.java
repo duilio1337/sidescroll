@@ -7,6 +7,7 @@ public class Block extends GSprite implements SolidGround {
 	
 	public Block() {
 		super(ImageCache.getImage("block.png"));
+		setAnchorCenter();
 	}
 
 }

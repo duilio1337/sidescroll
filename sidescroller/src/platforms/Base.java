@@ -7,6 +7,7 @@ public class Base extends GSprite implements SolidGround {
 	
 	public Base() {
 		super(ImageCache.getImage("bottom.png"));
+		setAnchorCenter();
 	}
 
 }

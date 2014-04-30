@@ -10,6 +10,7 @@ public class Block2080 extends Platform {
 		
 		PlatformController2 pc = new PlatformController2();
 		addController(pc);
+		setAnchorCenter();
 	}
 
 }
