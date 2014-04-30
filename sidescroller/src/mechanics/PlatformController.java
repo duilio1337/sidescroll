@@ -240,9 +240,9 @@ public class PlatformController implements Controller {
 			} else if (!onSolidWall && vx > -maxSpeed && horizontal < 0) {
 				vx += horizontal * aAcceleration;
 			} else if (!onSolidWall && vx > 0 && horizontal == 0) {
-				vx -= horizontal * aAcceleration;
+				vx -= aAcceleration;
 			} else if (!onSolidWall && vx < 0 && horizontal == 0) {
-				vx += horizontal * aAcceleration;
+				vx += aAcceleration;
 			}
 		}
 		System.out.println(vx);

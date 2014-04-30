@@ -28,7 +28,7 @@ public class ScrollGameView extends GContainer {
 		addAtCenter(bk);
 		
 		PlatformController2 bgc = new PlatformController2();
-		bk.addController(bgc);
+		//bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);
 		
