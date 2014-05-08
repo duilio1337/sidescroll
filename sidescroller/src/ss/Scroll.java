@@ -5,10 +5,12 @@ import java.awt.Color;
 import jgame.GRootContainer;
 import jgame.Game;
 import jgame.ImageCache;
+import jgame.SoundManager;
 
 public class Scroll extends Game{
 	public static void main(String[] args) {
 		ImageCache.create(Scroll.class, "/ss/rsc/");
+		SoundManager.create(Scroll.class, "/ss/rsc/");
 		Scroll s1 = new Scroll();
 		s1.startGame("Side Scroller");
 	}

@@ -13,7 +13,7 @@ import jgame.controller.Controller;
  * defined by the given {@link PlatformControlScheme}. This controller cannot be
  * shared.
  * 
- * @author William Chargin
+ * @author Alma Chagrin
  * 
  */
 public class PlatformController implements Controller {
@@ -192,9 +192,7 @@ public class PlatformController implements Controller {
 						onSolidWall = true;
 					}
 				}
-				
 			}
-
 		}
 
 		if (onSolidGround) {

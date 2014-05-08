@@ -1,5 +1,6 @@
 package ss;
 
+import hero.Coin;
 import hero.Hero;
 import mechanics.PlatformController2;
 import platforms.Base;
@@ -10,7 +11,9 @@ import jgame.ImageCache;
 
 public class ScrollGameView extends GContainer {
 	
+	public final Hero hero = new Hero();
 	Block2080 block2080 = new Block2080();
+	PlatformController2 bgc = new PlatformController2();
 	
 	public ScrollGameView() {
 		setSize(1280, 720);
@@ -26,13 +29,10 @@ public class ScrollGameView extends GContainer {
 		GSprite bk = new GSprite(ImageCache.getImage("background2.png"));
 		bk.setAnchorTopLeft();
 		addAtCenter(bk);
-		
-		PlatformController2 bgc = new PlatformController2();
-		//bk.addController(bgc);
+		bk.addController(bgc);
 		
 		addAt(new Base(), 1280/2, 700);
 		
-		Hero hero = new Hero();
 		hero.setAnchorCenter();
 		addAt(hero, 1280/2, 720/2);
 		
@@ -43,6 +43,13 @@ public class ScrollGameView extends GContainer {
 	public void createPlatforms() {
 		addAt(new Block2080(), 1280/2, 640);
 		addAt(new Block2080(), 1280/2, 400);
+		addAt(new Block2080(), 1280*1.1, 400);
+		addAt(new Block2080(), 1280*1.4, 400);
+		addAt(new Block2080(), 1280*2.2, 400);
+		addAt(new Coin(), 1280/2, 500);
+		addAt(new Coin(), 1280*1.1, 500);
+		addAt(new Coin(), 1280*1.4, 500);
+		addAt(new Coin(), 1280*2.2, 500);
 	}
 
 }
