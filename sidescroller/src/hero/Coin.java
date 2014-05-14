@@ -1,5 +1,6 @@
 package hero;
 
+import ss.Scroll;
 import mechanics.PlatformController2;
 import jgame.Context;
 import jgame.GObject;
@@ -21,6 +22,8 @@ public class Coin extends GSprite {
 			public void invoke(GObject target, Context context) {
 				if(hitTest(getFirstAncestorOf(ss.ScrollGameView.class).hero)){
 					SoundManager.playSound("coin1.wav");
+					Scroll.addCoins(1);
+					
 					removeSelf();
 					removeListener(fl);
 				}

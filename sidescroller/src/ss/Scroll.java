@@ -8,6 +8,8 @@ import jgame.ImageCache;
 import jgame.SoundManager;
 
 public class Scroll extends Game{
+	private static int coins;
+	
 	public static void main(String[] args) {
 		ImageCache.create(Scroll.class, "/ss/rsc/");
 		SoundManager.create(Scroll.class, "/ss/rsc/");
@@ -26,5 +28,13 @@ public class Scroll extends Game{
 	
 	public enum Views {
 		GAME
+	}
+	
+	public static int getCoins() {
+		return coins;
+	}
+	
+	public static void addCoins(int num) {
+		coins += num;
 	}
 }

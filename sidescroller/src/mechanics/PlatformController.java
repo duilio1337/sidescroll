@@ -62,6 +62,9 @@ public class PlatformController implements Controller {
 	 * bool used to see if char is hitting a wall
 	 */
 	private boolean onSolidWall;
+	
+	private boolean onNegSide;
+	private boolean onPosSide;
 
 	/**
 	 * The amount of change in vx / frame
@@ -89,6 +92,8 @@ public class PlatformController implements Controller {
 	 *            the maximum horizontal speed (in px/frame)
 	 * @param maxJump
 	 *            the maximum jump speed (in px/frame)
+	 * @param acceleration
+	 *            the speed at which the objects speed up
 	 */
 	public PlatformController(PlatformControlScheme controlScheme,
 			double maxSpeed, double maxJump, double acceleration) {
@@ -188,8 +193,16 @@ public class PlatformController implements Controller {
 					} else if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2))
 							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2))) {
 						
-						vx = 0;
 						onSolidWall = true;
+						onSolidGround = false;
+						
+						//side of plat on
+						onNegSide = targetX < groundObjectX;
+						onPosSide = targetX > groundObjectX;
+						
+						//allow velocity if its going in the right dir
+						if(onNegSide && vx < 0) vx = 0;
+						else if(onPosSide && vx > 0) vx = 0;
 					}
 				}
 			}
@@ -227,9 +240,9 @@ public class PlatformController implements Controller {
 				vx -= gAcceleration;
 			} else if (!onSolidWall && horizontal == 0 && vx < 0) {
 				vx += gAcceleration;
-			} else if (onSolidWall && targetX < groundObjectX && horizontal > 0) {
+			} else if (onSolidWall && onNegSide && horizontal > 0) {
 				vx += horizontal * gAcceleration;
-			} else if (onSolidWall && targetX > groundObjectX && horizontal < 0) {
+			} else if (onSolidWall && onPosSide && horizontal < 0) {
 				vx += horizontal * gAcceleration;
 			}
 		} else {
