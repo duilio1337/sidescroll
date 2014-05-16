@@ -29,7 +29,7 @@ public class ScrollGameView extends GContainer {
 		GSprite bk = new GSprite(ImageCache.getImage("background2.png"));
 		bk.setAnchorTopLeft();
 		addAtCenter(bk);
-		bk.addController(bgc);
+		//bk.addController(bgc);
 		
 		hero.setAnchorCenter();
 		addAt(hero, 1280/2, 720/2);
@@ -40,6 +40,7 @@ public class ScrollGameView extends GContainer {
 	}
 	
 	public void createPlatforms() {
+		addAt(new Base(), 1280/2, 700);
 		addAt(new Block2080(), 1280/2, 640);
 		addAt(new Block20160(), 1280/2, 400);
 		addAt(new Block2080(), 1280*1.1, 400);
@@ -49,7 +50,6 @@ public class ScrollGameView extends GContainer {
 		addAt(new Coin(), 1280*1.1, 500);
 		addAt(new Coin(), 1280*1.4, 500);
 		addAt(new Coin(), 1280*2.2, 500);
-		addAt(new Base(), 1280/2, 700);
 	}
 
 }

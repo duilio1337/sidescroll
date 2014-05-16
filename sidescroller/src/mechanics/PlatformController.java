@@ -57,6 +57,7 @@ public class PlatformController implements Controller {
 	 * used to test if char in on solid ground
 	 */
 	private boolean onSolidGround;
+	private boolean anyOnSolidGround;
 
 	/**
 	 * bool used to see if char is hitting a wall
@@ -151,6 +152,7 @@ public class PlatformController implements Controller {
 		}
 		outOfGround = 0;
 		onSolidGround = false;
+		anyOnSolidGround = false;
 		onSolidWall = false;
 
 		List<SolidGround> solidGrounds = context
@@ -204,9 +206,15 @@ public class PlatformController implements Controller {
 						if(onNegSide && vx < 0) vx = 0;
 						else if(onPosSide && vx > 0) vx = 0;
 					}
+				} else {
+					if ((targetX - (targetWidth / 2)) < (groundObjectX + (groundObjectWidth / 2) - 20)
+							&& (targetX + (targetWidth / 2)) > (groundObjectX - (groundObjectWidth / 2) + 20)) {
+						if(targetY < groundObjectY) anyOnSolidGround = true;
+					}
 				}
 			}
 		}
+		if(anyOnSolidGround) onSolidGround = true;
 
 		if (onSolidGround) {
 			if (jump) {
@@ -256,7 +264,7 @@ public class PlatformController implements Controller {
 				vx += aAcceleration;
 			}
 		}
-		System.out.println(vx);
+		System.out.println(vx + " " + outOfGround + " " + onSolidGround );
 		target.setLocation(target.getX() , target.getY() + vy + outOfGround);
 	}
 
